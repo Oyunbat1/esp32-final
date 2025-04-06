@@ -30,7 +30,7 @@
         width: 100vw;
       }
       .container {
-        backdrop-filter: blur(6px);
+        backdrop-filter: blur(10px);
         height: 100vh;
         width: 100vw;
         display: flex;
@@ -39,7 +39,7 @@
       }
       .container form {
         background-color: var(--background-color);
-        width: 380px;
+        width: 360px;
         height: auto;
         border-radius: 6px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
@@ -54,7 +54,7 @@
         display: block;
       }
       .container form .footer-button {
-        width: 340px;
+        width: 320px;
         height: 40px;
         padding: 6px;
         background-color: var(--button-color);
@@ -82,7 +82,7 @@
       .container form .header-tabs {
         display: flex;
         background-color: var(--button-color);
-        width: 340px;
+        width: 320px;
         padding: 6px;
         border-radius: 6px;
         gap: 6px;
@@ -132,7 +132,7 @@
       .container form .tabs-content .form-group .upper input {
         padding: 10px;
         border-radius: 6px;
-        width: 340px;
+        width: 320px;
         height: 40px;
         border: 1px solid #9b9b9b;
       }
@@ -142,7 +142,7 @@
       .container form .tabs-content .form-group .down .input-pass-container {
         padding: 10px;
         border-radius: 6px;
-        width: 340px;
+        width: 320px;
         height: 40px;
         border: 1px solid #9b9b9b;
         display: flex;
@@ -431,31 +431,43 @@
       }
 
       const form = document.getElementById("login-form");
-
       form.addEventListener("submit", function (event) {
         let hasError = false;
 
-        if (usernameInput.value === "" || passwordCustomerInput.value === "") {
-          event.preventDefault();
-          errorMessage1.style.display = "block";
-          errorMessage2.style.display = "block";
-          hasError = true;
-        } else {
-          errorMessage1.style.display = "none";
-          errorMessage2.style.display = "none";
-        }
+        const activeTab = document.querySelector(".tabs-content.active");
 
-        if (
-          adminUsernameInput.value === "" ||
-          passwordAdminInput.value === ""
-        ) {
-          event.preventDefault();
-          errorMessage1Admin.style.display = "block";
-          errorMessage2Admin.style.display = "block";
-          hasError = true;
-        } else {
-          errorMessage1Admin.style.display = "none";
-          errorMessage2Admin.style.display = "none";
+        if (activeTab.id === "customerTab") {
+          if (usernameInput.value === "") {
+            event.preventDefault();
+            errorMessage1.style.display = "block";
+            hasError = true;
+          } else {
+            errorMessage1.style.display = "none";
+          }
+
+          if (passwordCustomerInput.value === "") {
+            event.preventDefault();
+            errorMessage2.style.display = "block";
+            hasError = true;
+          } else {
+            errorMessage2.style.display = "none";
+          }
+        } else if (activeTab.id === "adminTab") {
+          if (adminUsernameInput.value === "") {
+            event.preventDefault();
+            errorMessage1Admin.style.display = "block";
+            hasError = true;
+          } else {
+            errorMessage1Admin.style.display = "none";
+          }
+
+          if (passwordAdminInput.value === "") {
+            event.preventDefault();
+            errorMessage2Admin.style.display = "block";
+            hasError = true;
+          } else {
+            errorMessage2Admin.style.display = "none";
+          }
         }
 
         if (hasError) {
