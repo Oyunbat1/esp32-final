@@ -14,7 +14,7 @@
       :root {
         --background-color: #fff;
         --button-color: #0118d8;
-        --button-color-hover: #1b56fd;
+        --button-color-hover: #4979ff;
         --button-color-active: #0a0f7c;
         --text-color: #fff;
         --text-color-hover: black;
@@ -30,7 +30,7 @@
         width: 100vw;
       }
       .container {
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(6px);
         height: 100vh;
         width: 100vw;
         display: flex;
@@ -54,7 +54,7 @@
         display: block;
       }
       .container form .footer-button {
-        width: 360px;
+        width: 340px;
         height: 40px;
         padding: 6px;
         background-color: var(--button-color);
@@ -82,7 +82,7 @@
       .container form .header-tabs {
         display: flex;
         background-color: var(--button-color);
-        width: 360px;
+        width: 340px;
         padding: 6px;
         border-radius: 6px;
         gap: 6px;
@@ -132,7 +132,7 @@
       .container form .tabs-content .form-group .upper input {
         padding: 10px;
         border-radius: 6px;
-        width: 360px;
+        width: 340px;
         height: 40px;
         border: 1px solid #9b9b9b;
       }
@@ -142,13 +142,39 @@
       .container form .tabs-content .form-group .down .input-pass-container {
         padding: 10px;
         border-radius: 6px;
-        width: 360px;
+        width: 340px;
         height: 40px;
         border: 1px solid #9b9b9b;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
+      .container
+        form
+        .tabs-content
+        .form-group
+        .down
+        .input-pass-container
+        .eye-icon-container {
+        border: 1px solid #9b9b9b;
+        border-radius: 6px;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container
+        form
+        .tabs-content
+        .form-group
+        .down
+        .input-pass-container
+        .eye-icon-container
+        img {
+        width: 14px;
+        height: 14px;
+      }
+
       .container
         form
         .tabs-content
@@ -257,12 +283,14 @@
                   name="password"
                   placeholder="Нууц үгээ оруулна уу."
                 />
-                <img
-                  onclick="togglePasswordVisibility('customer')"
-                  id="eyeIconCustomer"
-                  src="/eye-closed.webp"
-                  alt="eye icon"
-                />
+                <div class="eye-icon-container">
+                  <img
+                    onclick="togglePasswordVisibility('customer')"
+                    id="eyeIconCustomer"
+                    src="/eye-closed.webp"
+                    alt="eye icon"
+                  />
+                </div>
               </div>
             </div>
             <p
@@ -316,12 +344,14 @@
                   name="adminPassword"
                   placeholder="Нууц үгээ оруулна уу."
                 />
-                <img
-                  onclick="togglePasswordVisibility('admin')"
-                  id="eyeIconAdmin"
-                  src="/eye-closed.webp"
-                  alt="eye icon"
-                />
+                <div class="eye-icon-container">
+                  <img
+                    onclick="togglePasswordVisibility('admin')"
+                    id="eyeIconAdmin"
+                    src="/eye-closed.webp"
+                    alt="eye icon"
+                  />
+                </div>
               </div>
             </div>
             <p
