@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./customer.css" />
+    <title>Хэрэглэгчийн хэсэг</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sheet" onclick="openSheet()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <div class="main-content-container">
+        <div class="exam-pdf">
+          <h1>Шалгалт бөглөх хэсэг</h1>
+          <iframe
+            src="example.pdf"
+            frameborder="0"
+            type="application/pdf"
+          ></iframe>
+        </div>
+        <div class="form-container">
+          <form action="/customer" method="GET"></form>
+        </div>
+      </div>
+    </div>
+    <div id="sheet" class="sheet-overlay">
+      <div class="sheet-content">
+        <div class="exam-score">
+          <form action="/data_harah" method="GET">
+            <button type="submit" class="submit-btn">Шалгалтын дүн</button>
+          </form>
+        </div>
+      </div>
+      <button class="close-btn" onclick="closeSheet()">X</button>
+    </div>
+
+    <script>
+      function openSheet() {
+        document.getElementById("sheet").classList.add("open");
+      }
+      function closeSheet() {
+        document.getElementById("sheet").classList.remove("open");
+      }
+    </script>
+  </body>
+</html>
