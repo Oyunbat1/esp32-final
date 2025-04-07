@@ -112,3 +112,133 @@
     transition: all 0.3s ease;
     font: bold;
   }
+
+  .container .main-content-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    border:  1px solid white;
+    padding: 4px;
+    border-radius: 6px;
+    margin-top: 40px;
+  }
+
+  .container .main-content-container .exam-pdf{
+    width: 340px;
+    height: 300px;
+    background-color: white;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+  }
+  .container .main-content-container .exam-pdf h1{
+    font-size: 18px;
+    padding-bottom: 6px;
+  }
+  .container .main-content-container .exam-pdf iframe{
+    width: 100%;
+    height: 256px;
+    border-radius: 6px;
+
+  }
+  .container .main-content-container .form-container {
+    width: 340px;
+    background-color: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container .main-content-container .form-container form .questions-container{
+    height: 300px;
+    background-color: rgb(244, 244, 244);
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    width: 300px;
+    justify-content: center;
+  padding-left: 36px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+    margin-left: 10px;
+    margin-top: 4px;
+  }
+
+  .container .main-content-container .form-container form .questions-container .options-container{
+display: flex;
+flex-direction: column;
+width: 100px;
+text-align: center;
+  }
+  
+  .container .main-content-container .form-container form .questions-container .options-container h3{
+    font-size: 16px;
+  }
+
+  .container .main-content-container .form-container form .questions-container .options-container .question{
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .container .main-content-container .form-container form .questions-container .options-container .question .options{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--button-color-hover);
+    padding: 2px;
+  }
+  .container .main-content-container .form-container form .questions-container .options-container .question .options:hover{
+    border: 1px solid var(--button-color);
+    background-color: #4979ff;
+    color: #fff;
+  }
+
+  .container .main-content-container .form-container form .footer{
+
+    margin:20px 0px;
+  }
+  .container .main-content-container .form-container form .footer .last-input{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+  }
+  .container .main-content-container .form-container form .footer .last-input input{
+    width: 320px;
+    height: 30px;
+    padding: 2px;
+    border: 1px solid #9b9b9b;
+    border-radius: 6px;
+    margin-top: 4px;
+  }
+  .container .main-content-container .form-container form .footer .last-input input:hover{
+    border: 1px solid var(--button-color);
+  }
+  .container .main-content-container .form-container form .footer .last-input input:focus{
+    border: 1px solid black;
+    outline: none;
+  }
+  .container .main-content-container .form-container form .footer .btn{
+    margin-top: 10px;
+    width: 320px;
+    height: 30px;
+    padding: 6px;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-bottom: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  .container .main-content-container .form-container form .footer .btn:hover{
+    background-color: var(--button-color-hover);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+ 
