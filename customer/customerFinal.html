@@ -38,6 +38,21 @@
     backdrop-filter: blur(6px);
     position: relative;
   }
+  .container .navbar {
+
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 90px;
+}
+.container .navbar .logo img{
+width: 220px;
+position: absolute;
+top: 30px;
+left: 40px;
+
+}
   .container .sheet {
     display: flex;
     flex-direction: column;
@@ -105,6 +120,7 @@
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
+    border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
   }
  .sheet-overlay .sheet-content .exam-score form button {
@@ -207,14 +223,14 @@ text-align: center;
   }
 
   .container .main-content-container .form-container form .footer{
-
-    margin:20px 0px;
+margin-bottom: 10px;
   }
   .container .main-content-container .form-container form .footer .last-input{
     display: flex;
     flex-direction: column;
     text-align: center;
     gap: 4px;
+    margin-top: 4px;
   }
   .container .main-content-container .form-container form .footer .last-input input{
     width: 320px;
@@ -241,7 +257,6 @@ text-align: center;
     border-radius: 6px;
     border: none;
     outline: none;
-    margin-bottom: 20px;
     transition: all 0.3s ease-in-out;
   }
   .container .main-content-container .form-container form .footer .btn:hover{
@@ -253,10 +268,13 @@ text-align: center;
 </style>
   <body>
     <div class="container">
-      <div class="sheet" onclick="openSheet()">
-        <div></div>
-        <div></div>
-        <div></div>
+      <div class="navbar">
+        <div class="logo"><img src="/logo-white.webp" alt="logo"></div>
+        <div class="sheet" onclick="openSheet()">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
 
       <div class="main-content-container">
