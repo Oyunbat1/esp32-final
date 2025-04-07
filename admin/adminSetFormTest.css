@@ -6,7 +6,7 @@
   :root {
     --background-color: #fff;
     --button-color: #0118d8;
-    --button-color-hover: #4979ff;
+    --button-color-hover: #235af0;
     --button-color-active: #0a0f7c;
     --text-color: #fff;
     --text-color-hover: black;
@@ -97,8 +97,12 @@
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+  }
+  .sheet-overlay .sheet-content .exam-score form {
     border-bottom: 1px solid #fff;
   }
+
  .sheet-overlay .sheet-content .exam-score form button {
    border: none;
     width: 300px;
@@ -125,26 +129,49 @@
     margin-top: 40px;
   }
 
-  .container .main-content-container .exam-pdf{
-    width: 340px;
-    height: 300px;
+  .container .main-content-container .header-form{
     background-color: white;
-    border-radius: 6px;
-    padding: 10px;
-    text-align: center;
-  }
-  .container .main-content-container .exam-pdf h1{
-    font-size: 18px;
-    padding-bottom: 6px;
-  }
-  .container .main-content-container .exam-pdf iframe{
     width: 100%;
-    height: 256px;
+    height: 50px;
     border-radius: 6px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 8px;
   }
+  .container .main-content-container .header-form  form{
+    display: flex;
+    gap: 6px;
+  }
+  .container .main-content-container .header-form  form .first-input{
+    height: 30px;
+    background-color: var(--button-color);
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    color: white;
+  }
+  .container .main-content-container .header-form  form .first-input:hover{
+    background-color: var(--button-color-hover);
+    transition: all ease-in-out 0.3s;
+  }
+  .container .main-content-container .header-form  form .second-input input:hover{
+    background-color: var(--button-color-hover);
+    transition: all ease-in-out 0.3s;
+  }
+  .container .main-content-container .header-form  form .second-input input{
+    height: 30px;
+    width: 80px;
+    border-radius: 6px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+  }
+
   .container .main-content-container .form-container {
-    width: 340px;
+    width: 360px;
     background-color: white;
     border-radius: 6px;
     display: flex;
@@ -153,7 +180,6 @@
 
   .container .main-content-container .form-container form .questions-container{
     height: 300px;
-    background-color: rgb(244, 244, 244);
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -226,14 +252,14 @@ text-align: center;
   .container .main-content-container .form-container form .footer .btn{
     margin-top: 10px;
     width: 320px;
-    height: 30px;
+    height: 40px;
     padding: 6px;
     background-color: var(--button-color);
     color: var(--text-color);
     border-radius: 6px;
     border: none;
     outline: none;
-    margin-bottom: 20px;
+
     transition: all 0.3s ease-in-out;
   }
   .container .main-content-container .form-container form .footer .btn:hover{

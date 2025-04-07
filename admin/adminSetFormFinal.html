@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Хэрэглэгчийн хэсэг</title>
+  </head>
+  <style>* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  :root {
+    --background-color: #fff;
+    --button-color: #0118d8;
+    --button-color-hover: #235af0;
+    --button-color-active: #0a0f7c;
+    --text-color: #fff;
+    --text-color-hover: black;
+    --font-family: "Roboto", Arial, sans-serif;
+  }
+  body {
+    font-family: var(--font-family);
+    background-image: url("../bg-image.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(6px);
+    position: relative;
+  }
+  .container .sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    position: absolute;
+    top: 40px;
+    right: 30px;
+    cursor: pointer;
+  }
+  .container .sheet div{
+    height: 4px;
+    width: 30px;
+    background-color: white;
+
+  }
+  .container .exam-pdf {
+    background-color: yellow;
+  }
+
+   .sheet-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: var(--button-color-hover);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sheet-overlay.open {
+    transform: translateX(0);
+  }
+.sheet-overlay  .close-btn {
+    margin-top: 20px;
+    background: #eee;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 100%;
+    position: absolute;
+    right: 30px;
+    top: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.sheet-overlay  .close-btn:hover {
+    background-color: rgb(218, 218, 218);
+  }
+ .sheet-overlay .sheet-content {
+
+    position: absolute;
+    top: 100px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+ .sheet-overlay .sheet-content .exam-score {
+    color: var(--text-color);
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .sheet-overlay .sheet-content .exam-score form {
+    border-bottom: 1px solid #fff;
+  }
+
+ .sheet-overlay .sheet-content .exam-score form button {
+   border: none;
+    width: 300px;
+    height: 60px;
+    background-color: var(--button-color-hover);
+    color: white;
+    
+  }
+  .sheet-overlay .sheet-content .exam-score form button:hover {
+    background-color: var(--button-color);
+    transition: all 0.3s ease;
+    font: bold;
+  }
+
+  .container .main-content-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    border:  1px solid white;
+    padding: 4px;
+    border-radius: 6px;
+    margin-top: 40px;
+  }
+
+  .container .main-content-container .header-form{
+    background-color: white;
+    width: 100%;
+    height: 50px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 8px;
+  }
+  .container .main-content-container .header-form  form{
+    display: flex;
+    gap: 6px;
+  }
+  .container .main-content-container .header-form  form .first-input{
+    height: 30px;
+    background-color: var(--button-color);
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    color: white;
+  }
+  .container .main-content-container .header-form  form .first-input:hover{
+    background-color: var(--button-color-hover);
+    transition: all ease-in-out 0.3s;
+  }
+  .container .main-content-container .header-form  form .second-input input:hover{
+    background-color: var(--button-color-hover);
+    transition: all ease-in-out 0.3s;
+  }
+  .container .main-content-container .header-form  form .second-input input{
+    height: 30px;
+    width: 80px;
+    border-radius: 6px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+  }
+
+  .container .main-content-container .form-container {
+    width: 360px;
+    background-color: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container .main-content-container .form-container form .questions-container{
+    height: 300px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    width: 300px;
+    justify-content: center;
+  padding-left: 36px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+    margin-left: 10px;
+    margin-top: 4px;
+  }
+
+  .container .main-content-container .form-container form .questions-container .options-container{
+display: flex;
+flex-direction: column;
+width: 100px;
+text-align: center;
+  }
+  
+  .container .main-content-container .form-container form .questions-container .options-container h3{
+    font-size: 16px;
+  }
+
+  .container .main-content-container .form-container form .questions-container .options-container .question{
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .container .main-content-container .form-container form .questions-container .options-container .question .options{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--button-color-hover);
+    padding: 2px;
+  }
+  .container .main-content-container .form-container form .questions-container .options-container .question .options:hover{
+    border: 1px solid var(--button-color);
+    background-color: #4979ff;
+    color: #fff;
+  }
+
+  .container .main-content-container .form-container form .footer{
+
+    margin:20px 0px;
+  }
+  .container .main-content-container .form-container form .footer .last-input{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+  }
+  .container .main-content-container .form-container form .footer .last-input input{
+    width: 320px;
+    height: 30px;
+    padding: 2px;
+    border: 1px solid #9b9b9b;
+    border-radius: 6px;
+    margin-top: 4px;
+  }
+  .container .main-content-container .form-container form .footer .last-input input:hover{
+    border: 1px solid var(--button-color);
+  }
+  .container .main-content-container .form-container form .footer .last-input input:focus{
+    border: 1px solid black;
+    outline: none;
+  }
+  .container .main-content-container .form-container form .footer .btn{
+    margin-top: 10px;
+    width: 320px;
+    height: 40px;
+    padding: 6px;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border-radius: 6px;
+    border: none;
+    outline: none;
+
+    transition: all 0.3s ease-in-out;
+  }
+  .container .main-content-container .form-container form .footer .btn:hover{
+    background-color: var(--button-color-hover);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+ 
+</style>
+  <body>
+    <div class="container">
+      <div class="sheet" onclick="openSheet()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <div class="main-content-container">
+        <div class="header-form">
+            <form
+              method="POST"
+              action="/upload"
+              enctype="multipart/form-data"
+              id="upload_form"
+            >
+              <div class="first-input"><input type="file" name="file" /></div>
+              <div class="second-input">
+                <input type="submit" value="Upload" />
+              </div>
+            </form>
+          </div>
+        <div class="form-container">
+          <form action="/customer" method="GET">
+            <div class="questions-container">
+              <div class="options-container">
+                <h3>Асуулт 1</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label>
+                    <input required type="radio" name="q1" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label>
+                    <input required type="radio" name="q1" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label>
+                    <input required type="radio" name="q1" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label>
+                    <input required type="radio" name="q1" value="D" />
+                  </div>
+                </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 2</h3>
+                <div class="question"><div class="options">
+                  <label>A</label>
+                  <input required type="radio" name="q2" value="A" />
+                </div>
+                <div class="options">
+                  <label>B</label>
+                  <input required type="radio" name="q2" value="B" />
+                </div>
+                <div class="options">
+                  <label>C</label>
+                  <input required type="radio" name="q2" value="C" />
+                </div>
+                <div class="options">
+                  <label>D</label>
+                  <input required type="radio" name="q2" value="D" />
+                </div></div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 3</h3>
+               <div class="question">
+                <div class="options">
+                  <label>A</label>
+                  <input required type="radio" name="q3" value="A" />
+                </div>
+                <div class="options">
+                  <label>B</label>
+                  <input required type="radio" name="q3" value="B" />
+                </div>
+                <div class="options">
+                  <label>C</label>
+                  <input required type="radio" name="q3" value="C" />
+                </div>
+                <div class="options">
+                  <label>D</label>
+                  <input required type="radio" name="q3" value="D" />
+                </div>
+               </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 4</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label>
+                    <input required type="radio" name="q4" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label>
+                    <input required type="radio" name="q4" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label>
+                    <input required type="radio" name="q4" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label>
+                    <input required type="radio" name="q4" value="D" />
+                  </div>
+                </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 5</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label>
+                    <input required type="radio" name="q5" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label>
+                    <input required type="radio" name="q5" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label>
+                    <input required type="radio" name="q5" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label>
+                    <input required type="radio" name="q5" value="D" />
+                  </div>
+                </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 6</h3>
+               <div class="question">
+                <div class="options">
+                  <label>A</label
+                  ><input required type="radio" name="q6" value="A" />
+                </div>
+                <div class="options">
+                  <label>B</label
+                  ><input required type="radio" name="q6" value="B" />
+                </div>
+                <div class="options">
+                  <label>C</label
+                  ><input required type="radio" name="q6" value="C" />
+                </div>
+                <div class="options">
+                  <label>D</label
+                  ><input required type="radio" name="q6" value="D" />
+                </div>
+               </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 7</h3>
+                <div class="question"><div class="options">
+                  <label>A</label
+                  ><input required type="radio" name="q7" value="A" />
+                </div>
+                <div class="options">
+                  <label>B</label
+                  ><input required type="radio" name="q7" value="B" />
+                </div>
+                <div class="options">
+                  <label>C</label
+                  ><input required type="radio" name="q7" value="C" />
+                </div>
+                <div class="options">
+                  <label>D</label
+                  ><input required type="radio" name="q7" value="D" />
+                </div></div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 8</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label
+                    ><input required type="radio" name="q8" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label
+                    ><input required type="radio" name="q8" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label
+                    ><input required type="radio" name="q8" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label
+                    ><input required type="radio" name="q8" value="D" />
+                  </div>
+                </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 9</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label
+                    ><input required type="radio" name="q9" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label
+                    ><input required type="radio" name="q9" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label
+                    ><input required type="radio" name="q9" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label
+                    ><input required type="radio" name="q9" value="D" />
+                  </div>
+                </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 10</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label
+                    ><input required type="radio" name="q10" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label
+                    ><input required type="radio" name="q10" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label
+                    ><input required type="radio" name="q10" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label
+                    ><input required type="radio" name="q10" value="D" />
+                  </div>
+                </div>
+              </div>
+              <div class="options-container">
+                <h3>Асуулт 11</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q11" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q11" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q11" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q11" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 12</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q12" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q12" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q12" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q12" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 13</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q13" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q13" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q13" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q13" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 14</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q14" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q14" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q14" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q14" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 15</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q15" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q15" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q15" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q15" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 16</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q16" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q16" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q16" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q16" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 17</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q17" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q17" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q17" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q17" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 18</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q18" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q18" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q18" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q18" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 19</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q19" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q19" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q19" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q19" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="options-container">
+                <h3>Асуулт 20</h3>
+                <div class="question">
+                  <div class="options">
+                    <label>A</label><input required type="radio" name="q20" value="A" />
+                  </div>
+                  <div class="options">
+                    <label>B</label><input required type="radio" name="q20" value="B" />
+                  </div>
+                  <div class="options">
+                    <label>C</label><input required type="radio" name="q20" value="C" />
+                  </div>
+                  <div class="options">
+                    <label>D</label><input required type="radio" name="q20" value="D" />
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+    
+            <div class="footer">
+
+              <button class="btn" type="submit">Илгээх</button>
+            </div>
+          </form>
+      </div>
+        </div>
+      </div>
+    </div>
+    <div id="sheet" class="sheet-overlay">
+      <div class="sheet-content">
+        <div class="exam-score">
+          <form action="/push_data" method="GET">
+            <button type="submit" class="submit-btn">Шалгалт дуусгах</button>
+          </form>
+          <form action="/data_harah" method="GET">
+            <button type="submit" class="submit-btn">Шалгалтын дүн</button>
+          </form>
+        </div>
+      </div>
+      <button class="close-btn" onclick="closeSheet()">X</button>
+    </div>
+
+    <script>
+      function openSheet() {
+        document.getElementById("sheet").classList.add("open");
+      }
+      function closeSheet() {
+        document.getElementById("sheet").classList.remove("open");
+      }
+    </script>
+  </body>
+</html>
