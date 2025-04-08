@@ -171,7 +171,7 @@
   left: 20px;
   font-size: 12px;
   right: 0;
-  color: rgb(80, 255, 80);
+  color: rgb(38, 165, 38);
   }
   .container .main-content-container .header-form form #uploading.uploading{
     display: flex;
@@ -796,7 +796,7 @@ text-align: center;
         e.preventDefault();
         const res = validateSize();
         if (res) {
-          throw console.log(res);
+          throw res;
         }
         const file = input.files[0];
         const renamedFile = new File([file], "example.pdf", { type: file.type });
