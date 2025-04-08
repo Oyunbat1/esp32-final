@@ -336,8 +336,8 @@ text-align: center;
   <body>
     <div class="container">
       <div class="navbar">
-        <div class="logo"><a href="../login/login.html"><img src="/logo-white.webp" alt="logo"></a></div>
-        <div class="sheet" onclick="openSheet()">
+        <div class="logo"><img src="/logo-white.webp" alt="logo"></div>
+        <div class="sheet" onclick='openSheet()'>
           <div></div>
           <div></div>
           <div></div>
@@ -361,7 +361,7 @@ text-align: center;
             </form>
           </div>
         <div class="form-container">
-          <form action="/customer" method="GET" onsubmit="submitForm(event)">
+          <form action="/customer" method="GET">
             <div class="questions-container">
               <div class="options-container">
                 <h3>Асуулт 1</h3>
@@ -753,7 +753,7 @@ text-align: center;
     
             <div class="footer">
 
-              <button class="btn">Илгээх</button>
+              <button class="btn" type="submit">Илгээх</button>
             </div>
           </form>
       </div>
@@ -774,7 +774,7 @@ text-align: center;
             </form>
         </div>
       </div>
-      <button class="close-btn" onclick="closeSheet()">X</button>
+      <button class="close-btn" onclick='closeSheet()'>X</button>
     </div>
 
     <script>
@@ -784,41 +784,26 @@ text-align: center;
       function closeSheet() {
         document.getElementById("sheet").classList.remove("open");
       }
-
       //----
       const input = document.querySelector('input[type="file"]');
       const userInfo = document.getElementById('info');
       const useruploading = document.getElementById('uploading')
       const form = document.getElementById('upload_form');
-   
       input.addEventListener('change', () => {
         validateSize();
       });
       form.addEventListener('submit', (e) => {
-        e.preventDefault();
         const res = validateSize();
         if (res) {
+          e.preventDefault();
           throw res;
-
         }
-        let file = input.files[0];
-        file = new File([file], "example.pdf", { type: file.type });
-        console.log(file)
-        // console.log(formData);
-
+        
         useruploading.classList.remove('uploading')
         userInfo.classList.remove('show');
         useruploading.textContent = "Uploading starting...";
         useruploading.classList.add('uploading')
-      
-        setTimeout(() => {
-          useruploading.textContent = "File uploaded successfully.";
-          useruploading.classList.add('uploading')
-          
-        }, 1500);
       });
-
-    
 
       function validateSize() {
         const file = input.files[0];
@@ -842,6 +827,11 @@ text-align: center;
           userInfo.classList.add('show');
           return err;
         }
+
+        useruploading.classList.remove('uploading')
+        userInfo.classList.remove('show');
+
+        return false;
       }
     </script>
   </body>

@@ -4,8 +4,8 @@
 #include <LittleFS.h>
 
 // WiFi credentials
-const char* ssid = "ESP32-Exam-System";
-const char* password = "password123";
+const char *ssid = "ESP32-Exam-System";
+const char *password = "password123";
 
 // Server
 AsyncWebServer server(80);
@@ -16,7 +16,7 @@ String adminPassword = "admin123";
 String customerUsername = "customer";
 String customerPassword = "customer123";
 
-const char* upload = R"(
+const char *upload = R"(
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +32,7 @@ const char* upload = R"(
 </html>
 )";
 
-const char* login = R"(
+const char *login = R"(
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -1269,7 +1269,7 @@ String customer1 = R"(
 </html>
 )";
 
-const char* admin = R"(
+const char *admin = R"(
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -2033,68 +2033,78 @@ text-align: center;
 File file;
 String customertxt;
 
-void Upload(AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {
-    static File file;
-    if (!index) {
-        Serial.printf("Uploading: %s\n", filename.c_str());
-        file = LittleFS.open("/" + filename, "w");
-    }
-    if (file) {
-        file.write(data, len);
-    }
-    if (final) {
-        Serial.printf("Upload complete: %s (%d bytes)\n", filename.c_str(), index + len);
-        file.close();
-        request->send(200, "text/plain", "File upload successful");
-    }
+void Upload(AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final)
+{
+  static File file;
+  if (!index)
+  {
+    Serial.printf("Uploading: %s\n", filename.c_str());
+    file = LittleFS.open("/" + filename, "w");
+  }
+  if (file)
+  {
+    file.write(data, len);
+  }
+  if (final)
+  {
+    Serial.printf("Upload complete: %s (%d bytes)\n", filename.c_str(), index + len);
+    file.close();
+    request->send(200, "text/plain", "File upload successful");
+  }
 }
 
-String grade(String admin, String custom, bool bl) {
+String grade(String admin, String custom, bool bl)
+{
   int cur = 0;
   String answer;
-  for (int i = 0; i < admin.length(); i++) {
-    if (admin[i] == custom[i]) cur++;
+  for (int i = 0; i < admin.length(); i++)
+  {
+    if (admin[i] == custom[i])
+      cur++;
   }
   Serial.println(bl);
-  if (bl == 1) {
+  if (bl == 1)
+  {
     Serial.println(bl);
     answer = String(admin.length()) + "/" + String(cur);
 
     return answer;
   }
-  else {
+  else
+  {
     return "0";
   }
 
   Serial.println();
 }
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
 
-  
-  if (!LittleFS.begin()) {
+  if (!LittleFS.begin())
+  {
     Serial.println("Failed to mount LittleFS");
     return;
   }
-  
 
   WiFi.softAPConfig(IPAddress(192, 168, 4, 1), IPAddress(192, 168, 4, 1), IPAddress(255, 255, 255, 0));
   WiFi.softAP(ssid, password, 1, 0, 10);
   Serial.print("IP Address: ");
   Serial.println(WiFi.softAPIP());
 
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) {
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
     //readFile(LittleFS, "/");
     listDir(LittleFS ,"/", 1);
     Serial.println("/");
     request->send(200, "text/html", login);
     Serial.println(readFile(LittleFS, "/admin.txt"));
-    Serial.println(readFile(LittleFS, "/customer.txt"));
-  });
+    Serial.println(readFile(LittleFS, "/customer.txt")); });
 
   // Handle login
-  server.on("/login", HTTP_GET, [](AsyncWebServerRequest* request) {
+  server.on("/login", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
     listDir(LittleFS ,"/", 1);
     String username = request->arg("username");
     String password = request->arg("password");
@@ -2109,11 +2119,11 @@ void setup() {
       request->send(200, "text/html", customer + customer1);
     } else {
       request->send(401, "text/plain", "Invalid credentials!");
-    }
-  });
+    } });
 
   // Admin page to set exam
-  server.on("/admin", HTTP_GET, [](AsyncWebServerRequest* request) {
+  server.on("/admin", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
     Serial.println("/admin");
 
     String a;
@@ -2131,11 +2141,11 @@ void setup() {
 
     writeFile(LittleFS, "/admin.txt", admintxt);
 
-    request->send(200, "text/html", admin);
-  });
+    request->send(200, "text/html", admin); });
 
   // Customer page to answer exam
-  server.on("/customer", HTTP_GET, [](AsyncWebServerRequest* request) {
+  server.on("/customer", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
     String q;
     String st;
     String lastans;
@@ -2154,25 +2164,25 @@ void setup() {
 
     customertxt += ",";
 
-    request->send(200, "text/html", customer + grade(admin, lastans, 1) + customer1);
-  });
+    request->send(200, "text/html", customer + grade(admin, lastans, 1) + customer1); });
 
-  server.on("/push_data", HTTP_GET, [](AsyncWebServerRequest* request) {
+  server.on("/push_data", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
     //Serial.println(customertxt);
     if (!customertxt.isEmpty()) writeFile(LittleFS, "/customer.txt", customertxt);
     customertxt = "";
-    request->send(200, "text/html", admin);
-  });
+    request->send(200, "text/html", admin); });
 
   /*
   <div style="display: flex; justify-content: center;align-items: center;height: 100vh;">
-	<table border="1px" style="border: 1px solid #20cfa0; border-collapse: collapse ;">
-		<tr><td style="padding: 8px;">aa</td><td style="padding: 8px;">aa</td><td style="padding: 8px;">aa</td><td style="padding: 8px;">aa</td></tr>
-	</table>
+  <table border="1px" style="border: 1px solid #20cfa0; border-collapse: collapse ;">
+    <tr><td style="padding: 8px;">aa</td><td style="padding: 8px;">aa</td><td style="padding: 8px;">aa</td><td style="padding: 8px;">aa</td></tr>
+  </table>
   </div>
 */
 
-  server.on("/data_harah", HTTP_GET, [](AsyncWebServerRequest* request) {
+  server.on("/data_harah", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
     String datas = readFile(LittleFS, "/customer.txt");
     String admin = readFile(LittleFS, "/admin.txt");
     String web;
@@ -2183,7 +2193,7 @@ void setup() {
     web += "<meta charset='UTF-8'>";
     web += "<div style='display: flex; justify-content: center;align-items: center;height: 100vh;'>";
     web += "<table border='1px' style='border: 1px solid #20cfa0; border-collapse: collapse ;'>";
-    web += "<tr><td style='padding: 8px;'> Нэр </td><td style='padding: 8px;'>Таний хариулт</td><td style='padding: 8px;'>Шалгалтын хариу</td><td style='padding: 8px;'>Шалгалтын хувь</td></tr>";
+    web += "<tr><td style='padding: 8px;'> Нэр </td><td style='padding: 8px;'>Таний хариулт</td><td style='padding: 8px;' </td><td style='padding: 8px;'>Шалгалтын хувь</td></tr>";
 
     for (int i = 0; i < datas.length(); i++) {
       if (datas[i] == ',') {
@@ -2207,45 +2217,36 @@ void setup() {
 
     web += "</table></div>";
 
-    request->send(200, "text/html", web);
-  });
+    request->send(200, "text/html", web); });
 
-  server.on("/example.pdf", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/example.pdf", "application/pdf");
-  });
+  server.on("/example.pdf", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/example.pdf", "application/pdf"); });
 
-  server.on("/example.pdf#zoom=5", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/example.pdf#zoom=5", "application/pdf");
-  });
+  server.on("/example.pdf#zoom=5", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/example.pdf#zoom=5", "application/pdf"); });
 
-  server.on("/mubis_logo.webp", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/mubis_logo.webp", "application/webp");
-  });
+  server.on("/mubis_logo.webp", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/mubis_logo.webp", "application/webp"); });
 
-  server.on("/eye.webp", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/eye.webp", "application/webp");
-  });
+  server.on("/eye.webp", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/eye.webp", "application/webp"); });
 
-  server.on("/eye-closed.webp", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/eye-closed.webp", "application/webp");
-  });
+  server.on("/eye-closed.webp", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/eye-closed.webp", "application/webp"); });
 
-  server.on("/bg-image.webp", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/bg-image.webp", "application/webp");
-  });
+  server.on("/bg-image.webp", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/bg-image.webp", "application/webp"); });
 
-  server.on("/bg-image-2.webp", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/bg-image-2.webp", "application/webp");
-  });
+  server.on("/bg-image-2.webp", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/bg-image-2.webp", "application/webp"); });
 
-  server.on("/logo-white.webp", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/logo-white.webp", "application/webp");
-  });
-  
-  server.on("/upload", HTTP_POST, [](AsyncWebServerRequest* request) {
+  server.on("/logo-white.webp", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/logo-white.webp", "application/webp"); });
+
+  server.on("/upload", HTTP_POST, [](AsyncWebServerRequest *request)
+            {
     listDir(LittleFS ,"/", 1);
-    request->send(200, "text/html", admin);
-  }, Upload);
+    request->send(200, "text/html", admin); }, Upload);
 
   /*
   server.on("/upload", HTTP_POST, [](AsyncWebServerRequest *request) {
@@ -2253,7 +2254,7 @@ void setup() {
       request->send(200, "", "UPLOADED: "+request->getParam("data", true, true)->value());
   });
   */
-  
+
   /*
   server.on("/upload", HTTP_POST, [](AsyncWebServerRequest *request) {},
       [](AsyncWebServerRequest *request, const String& filename, size_t index, uint8_t *data,
@@ -2261,33 +2262,34 @@ void setup() {
   );
   */
 
-  
-  server.on("/jquery.min.js", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/jquery.min.js", "text/javascript");
-  });
+  server.on("/jquery.min.js", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/jquery.min.js", "text/javascript"); });
 
-    server.on("/A.txt", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send(LittleFS, "/A.txt", "text/plain");
-  });
-  
+  server.on("/A.txt", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(LittleFS, "/A.txt", "text/plain"); });
 
-    //writeFile(LittleFS, "/result.txt", "Hello ");
-    //readFile(LittleFS, "/result.txt");
+  // writeFile(LittleFS, "/result.txt", "Hello ");
+  // readFile(LittleFS, "/result.txt");
 
   server.begin();
 }
 
-void writeFile(fs::FS &fs, const char * path, String message){
+void writeFile(fs::FS &fs, const char *path, String message)
+{
   Serial.printf("Writing file: %s\r\n", path);
 
   File file = fs.open(path, FILE_WRITE);
-  if(!file){
+  if (!file)
+  {
     Serial.println("- failed to open file for writing");
     return;
   }
-  if(file.print(message)){
+  if (file.print(message))
+  {
     Serial.println("- file written");
-  } else {
+  }
+  else
+  {
     Serial.println("- write failed");
   }
   file.close();
@@ -2312,77 +2314,91 @@ void wf(fs::FS &fs, const char * path, uint8_t *data){
 }
 */
 
-
-void wf(fs::FS &fs, const char * path, uint8_t *data, size_t size){
+void wf(fs::FS &fs, const char *path, uint8_t *data, size_t size)
+{
   Serial.printf("Writing file: %s\r\n", path);
 
   File file = fs.open(path, FILE_WRITE);
-  if(!file){
+  if (!file)
+  {
     Serial.println("- failed to open file for writing");
     return;
   }
-  if(file.write(data, size)){
+  if (file.write(data, size))
+  {
     Serial.println("- file written");
-  } else {
+  }
+  else
+  {
     Serial.println("- write failed");
   }
   file.close();
 }
 
-
-String readFile(fs::FS &fs, const char * path){
+String readFile(fs::FS &fs, const char *path)
+{
   Serial.printf("Reading file: %s\r\n", path);
 
   File file = fs.open(path);
-  if(!file || file.isDirectory()){
+  if (!file || file.isDirectory())
+  {
     Serial.println("- failed to open file for reading");
     return "";
   }
 
   String st;
   Serial.println("- read from file:");
-  while(file.available()){
+  while (file.available())
+  {
     st += file.readString();
-    //Serial.println(file.readString());
-    //Serial.write(file.read());
+    // Serial.println(file.readString());
+    // Serial.write(file.read());
   }
   file.close();
 
   return st;
 }
 
-void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
-    Serial.printf("Listing directory: %s\r\n", dirname);
+void listDir(fs::FS &fs, const char *dirname, uint8_t levels)
+{
+  Serial.printf("Listing directory: %s\r\n", dirname);
 
-    File root = fs.open(dirname);
-    if(!root){
-        Serial.println("- failed to open directory");
-        return;
-    }
-    if(!root.isDirectory()){
-        Serial.println(" - not a directory");
-        return;
-    }
+  File root = fs.open(dirname);
+  if (!root)
+  {
+    Serial.println("- failed to open directory");
+    return;
+  }
+  if (!root.isDirectory())
+  {
+    Serial.println(" - not a directory");
+    return;
+  }
 
-    File file = root.openNextFile();
-    while(file){
-        if(file.isDirectory()){
-            Serial.print("  DIR : ");
-            Serial.println(file.name());
-            if(levels){
-                listDir(fs, file.path(), levels -1);
-            }
-        } else {
-            Serial.print("  FILE: ");
-            Serial.print(file.name());
-            Serial.print("\tSIZE: ");
-            Serial.println(file.size());
-        }
-        file = root.openNextFile();
+  File file = root.openNextFile();
+  while (file)
+  {
+    if (file.isDirectory())
+    {
+      Serial.print("  DIR : ");
+      Serial.println(file.name());
+      if (levels)
+      {
+        listDir(fs, file.path(), levels - 1);
+      }
     }
+    else
+    {
+      Serial.print("  FILE: ");
+      Serial.print(file.name());
+      Serial.print("\tSIZE: ");
+      Serial.println(file.size());
+    }
+    file = root.openNextFile();
+  }
 }
 
-void loop() {
+void loop()
+{
   // Nothing to do here
 }
-
