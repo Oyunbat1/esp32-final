@@ -197,7 +197,7 @@
     padding-top: 10px;
   }
   .container .main-content-container .header-form  form .first-input{
-  width: 243px;
+  width: 223px;
     height: 30px;
     background-color: var(--button-color);
     border-radius: 6px;
@@ -209,7 +209,7 @@
   }
 
   .container .main-content-container .header-form  form .first-input input[type="file"]{
-    padding-left: 28px;
+    padding-left: 44px;
     border-radius: 6px;
   }
 
@@ -224,7 +224,7 @@
   .container .main-content-container .header-form  form .second-input input{
     margin-right: 12px;
     height: 30px;
-    width: 80px;
+    width: 100px;
     border-radius: 6px;
     background-color: var(--button-color);
     color: white;
@@ -354,7 +354,7 @@ text-align: center;
             >
               <div class="first-input"><input type="file" id="fi" name="file" accept=".pdf" /></div>
               <div class="second-input">
-                <input type="submit" value="Upload" />
+                <input type="submit" value="Файл оруулах" />
               </div>
               <div id="info"></div>
               <div id="uploading"></div>
@@ -801,7 +801,7 @@ text-align: center;
         
         useruploading.classList.remove('uploading')
         userInfo.classList.remove('show');
-        useruploading.textContent = "Uploading starting...";
+        useruploading.textContent = "Файл оруулж байна...";
         useruploading.classList.add('uploading')
       });
 
@@ -810,7 +810,7 @@ text-align: center;
         if (!file) {
           useruploading.classList.remove('uploading')
           userInfo.classList.remove('show');
-          const err = new Error("No file selected");
+          const err = new Error("Файл оруулаагүй байна");
           userInfo.textContent = err.message;
           userInfo.classList.add('show');
           return err;
@@ -822,7 +822,7 @@ text-align: center;
         if (size > limit) {
           useruploading.classList.remove('uploading')
           userInfo.classList.remove('show');
-          const err = Error(`File is too big: ${(size / 1000).toFixed(2)}MB`);
+          const err = Error(`Файлын хэмжээ их: ${(size / 1000).toFixed(2)}MB`);
           userInfo.textContent = err.message;
           userInfo.classList.add('show');
           return err;
